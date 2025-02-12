@@ -27,17 +27,19 @@ function calculateFare() {
         let gstAmount = totalFare * gst;
         let discount = Math.min(totalFare * discountRate, caps[rateIndex]);
         let finalFare = totalFare + gstAmount - discount;
-        finalFare = Math.max(finalFare, 0);
+
+        // Ensure minimum fare does not go negative & round to whole numbers
+        finalFare = Math.max(Math.round(finalFare), 0);
 
         let row = tableBody.insertRow();
         row.innerHTML = `
             <td>${km}</td>
-            <td>${baseFare.toFixed(2)}</td>
-            <td>${pricePerKm.toFixed(2)}</td>
-            <td>${gstAmount.toFixed(2)}</td>
-            <td>${discount.toFixed(2)}</td>
-            <td>${caps[rateIndex].toFixed(2)}</td>
-            <td>${finalFare.toFixed(2)}</td>
+            <td>${Math.round(baseFare)}</td>
+            <td>${Math.round(pricePerKm)}</td>
+            <td>${Math.round(gstAmount)}</td>
+            <td>${Math.round(discount)}</td>
+            <td>${Math.round(caps[rateIndex])}</td>
+            <td>${finalFare}</td>
         `;
     }
 }
